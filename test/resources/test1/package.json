@@ -1,0 +1,23 @@
+{
+  "name": "test1",
+  "version": "0.1.0",
+  "description": "Discovers all projects inside a directory and links them through 'npm link' or symbolic links.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/hawky-4s-/npm-dependency-linker.git"
+  },
+  "keywords": [
+    "link",
+    "dependency"
+  ],
+  "author": "Christian Lipphardt <christian.lipphardt@camunda.com> (http://camunda.org/)",
+  "license": "MIT",
+  "dependencies": {
+    "shelljs": "0.3.0",
+    "lodash": "2.4.1"
+  }
+}
