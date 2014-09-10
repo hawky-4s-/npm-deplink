@@ -1,18 +1,19 @@
 {
-  "name": "dependency-linker",
+  "name": "deplink",
   "version": "0.0.0",
-  "description": "Discovers all projects inside a directory and links them through 'npm link' or symbolic links.",
+  "description": "Discovers all projects inside a directory, links them through 'npm link' and installs their modules 'npm install'.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/hawky-4s-/npm-dependency-linker.git"
+    "url": "git://github.com/hawky-4s-/npm-deplink.git"
   },
   "keywords": [
     "link",
-    "dependency"
+    "dependency",
+    "management"
   ],
   "author": "Christian Lipphardt <christian.lipphardt@camunda.com> (http://camunda.org/)",
   "license": "MIT",
@@ -24,25 +25,16 @@
     "grunt-contrib-clean": "~0.6.0",
     "grunt-jsdoc": "~0.5.7",
     "grunt-mocha-test": "~0.11.0",
-    "node-debug": "~0.1.0",
     "grunt-release":"~0.7.0",
     "load-grunt-tasks": "~0.6.0",
     "time-grunt": "~0.3.0",
     "grunt-notify": "~0.3.1",
-    "chai": "~1.9.1",
-    "shelljs": "~0.3.0",
-    "lodash": "~2.4.1",
-    "winston": "~0.7.3",
-    "async": "~0.9.0",
-    "q": "~1.0.1",
-    "q-io": "~1.11.4"
+    "chai": "~1.9.1"
   },
   "dependencies": {
     "shelljs": "0.3.0",
     "lodash": "2.4.1",
     "winston": "0.7.3",
-    "async": "0.9.0",
-    "q": "1.0.1",
-    "q-io": "1.11.4"
+    "async": "0.9.0"
   }
 }

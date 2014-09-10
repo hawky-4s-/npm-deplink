@@ -1,27 +1,21 @@
 'use strict';
 
-var _ = require('lodash');
-var path = require('path');
+var _ = require('lodash'),
+    path = require('path');
 
 var DependencyLinker = require('../../');
-var debugOptions = { loglevel: 'debug' };
+var debugOptions = { dryRun: true };
 
 var TEST_RESOURCS_DIR = 'test/resources';
 var ABSOLUTE_TEST_RESOURCES_DIR = path.resolve(TEST_RESOURCS_DIR);
 
+
 describe('DependencyLinker', function() {
-
-  describe('#link', function() {
-
-    it.skip('should link dependent modules inside a root folder', function() {
-    });
-
-  });
 
   describe('#getDirectories', function() {
 
     it('should get directories with absolute path from a folder', function() {
-      var dependencyLinker = new DependencyLinker(TEST_RESOURCS_DIR, debugOptions);
+      var dependencyLinker = new DependencyLinker(TEST_RESOURCS_DIR);
 
       var dirs = dependencyLinker.getDirectories(TEST_RESOURCS_DIR);
 
@@ -38,37 +32,32 @@ describe('DependencyLinker', function() {
 
   });
 
+
   describe('#discoverDependenciesForProject', function() {
 
     it('should return nothing from a directory without a package.json', function() {
-      var dependencyLinker = new DependencyLinker(null, debugOptions);
+      var dependencyLinker = new DependencyLinker(null);
 
       var testEmptyPath = path.resolve(TEST_RESOURCS_DIR + '/empty');
-      dependencyLinker.discoverDependenciesForProject(testEmptyPath, function(err, data) {
+      dependencyLinker.readDependencyDescriptorForProject(testEmptyPath, function(err, data) {
         expect(data).to.be.null;
       });
     });
 
-    it('should return dependencies from a directory with a package.json', function() {
-      var dependencyLinker = new DependencyLinker(null, debugOptions);
+    it('should return a dependency object from a directory with a package.json', function() {
+      var dependencyLinker = new DependencyLinker(null);
 
       var testPath = path.resolve(TEST_RESOURCS_DIR + '/test1');
-      dependencyLinker.discoverDependenciesForProject(testPath, function(err, data) {
+      dependencyLinker.readDependencyDescriptorForProject(testPath, function(err, data) {
         expect(data).to.deep.equal(
           {
+            "name":"test1",
             "path":"/Users/hawky4s/development/bpmn.io/dependency-linker/test/resources/test1",
             "dependencies":
             {
-              "name":"test1",
-              "version":"0.1.0",
-              "description":"Discovers all projects inside a directory and links them through 'npm link' or symbolic links.",
-              "main":"index.js",
-              "scripts":{"test":"echo \"Error: no test specified\" && exit 1"},
-              "repository":{"type":"git","url":"git://github.com/hawky-4s-/npm-dependency-linker.git"},
-              "keywords":["link","dependency"],
-              "author":"Christian Lipphardt <christian.lipphardt@camunda.com> (http://camunda.org/)",
-              "license":"MIT",
-              "dependencies":{"shelljs":"0.3.0","lodash":"2.4.1"}
+              "shelljs":"0.3.0",
+              "lodash":"2.4.1",
+              "q":"~1.0.1"
             }
           })
       });
@@ -76,23 +65,77 @@ describe('DependencyLinker', function() {
 
   });
 
+
   describe('#discoverDependencies', function() {
 
     it('should return all dependencies from the child directories', function() {
+      var dependencyLinker = new DependencyLinker(TEST_RESOURCS_DIR);
+
+      dependencyLinker.discoverDependencies(TEST_RESOURCS_DIR, function(err, result) {
+        if (err) {
+          throw new Error('Unable to get dependencies for directory: ' + TEST_RESOURCS_DIR);
+        }
+        var dependencies = result;
+
+        expect(_.keys(dependencies)).to.have.length(4);
+        _.forEach(dependencies, function(projectDep) {
+          expect(projectDep).to.have.keys(['name', 'path', 'dependencies']);
+        });
+      });
+
+    });
+
+  });
+
+
+  describe('#link', function() {
+
+    it('should link all dependencies', function() {
       var dependencyLinker = new DependencyLinker(TEST_RESOURCS_DIR, debugOptions);
 
-      var allDependencies = [];
-      dependencyLinker.discoverDependencies(TEST_RESOURCS_DIR, function(result) {
-        allDependencies = result;
+      dependencyLinker.link();
+    });
+
+  });
+
+
+  describe('#bpmn-io', function() {
+
+    // works on a checked out version of bpmn.io
+    it('link bpmn-io dependencies', function() {
+      var bpmnIoRepositories = [
+        "diagram-js",
+        "diagram-js-direct-editing",
+        "moddle",
+        "moddle-xml",
+        "bpmn-js",
+        "bpmn-js-cli",
+        "bpmn-moddle",
+        "ids",
+        "bpmn-js-integration",
+        "bpmn-miwg-test-suite"
+      ];
+
+      var shell = require('shelljs');
+      shell.config.silent = false;
+      shell.config.fatal = true;
+
+      // create temp path
+      var testPath = path.join(process.cwd().concat('/../dependency-linker-generated-it', '/bpmn.io'));
+      if (shell.test('-e', testPath)) {
+        shell.rm('-rf', testPath);
+      }
+      shell.mkdir('-p', testPath);
+
+      // checkout repositories
+      shell.cd(testPath);
+      _.forEach(bpmnIoRepositories, function(repository) {
+        shell.exec('git clone git@github.com:bpmn-io/' + repository + '.git')
       });
 
-      console.log(allDependencies);
+      var dependencyLinker = new DependencyLinker(testPath, { logLevel: 'debug', dryRun: false, verbose: true });
 
-      var expectedDependencies = [{}, {}, {}, {}];
-      expect(allDependencies).to.have.length(4);
-      _.forEach(allDependencies, function(projectDep) {
-        expect(projectDep).to.have.keys(['path', 'dependencies']);
-      });
+      dependencyLinker.link();
     });
 
   });
