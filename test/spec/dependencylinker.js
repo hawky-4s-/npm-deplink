@@ -48,11 +48,13 @@ describe('DependencyLinker', function() {
       var dependencyLinker = new DependencyLinker(null);
 
       var testPath = path.resolve(TEST_RESOURCS_DIR + '/test1');
+
+      var expectedPath =  path.join(process.cwd(), TEST_RESOURCS_DIR, 'test1');
       dependencyLinker.readDependencyDescriptorForProject(testPath, function(err, data) {
         expect(data).to.deep.equal(
           {
             "name":"test1",
-            "path":"/Users/hawky4s/development/bpmn.io/dependency-linker/test/resources/test1",
+            "path":expectedPath,
             "dependencies":
             {
               "shelljs":"0.3.0",
@@ -102,7 +104,7 @@ describe('DependencyLinker', function() {
   describe('#bpmn-io', function() {
 
     // works on a checked out version of bpmn.io
-    it('link bpmn-io dependencies', function() {
+    it.skip('link bpmn-io dependencies', function() {
       var bpmnIoRepositories = [
         "diagram-js",
         "diagram-js-direct-editing",
