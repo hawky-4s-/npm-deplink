@@ -130,7 +130,7 @@ describe('DependencyLinker', function() {
       // checkout repositories
       shell.cd(testPath);
       _.forEach(bpmnIoRepositories, function(repository) {
-        shell.exec('git clone git@github.com:bpmn-io/' + repository + '.git')
+        shell.exec('git clone git://github.com/bpmn-io/' + repository + '.git');
       });
 
       var dependencyLinker = new DependencyLinker(testPath, { logLevel: 'debug', dryRun: false, verbose: true });
