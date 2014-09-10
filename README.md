@@ -1,7 +1,7 @@
 deplink
 =======
 
-[![Build Status](https://travis-ci.org/hawky-4s-/npm-deplink.png)](https://travis-ci.org/mariocasciaro/npm-workspace)
+[![Build Status](https://travis-ci.org/hawky-4s-/npm-deplink.png)](https://travis-ci.org/hawky-4s-/npm-deplink)
 [![Dependency Status](https://gemnasium.com/hawky-4s-/npm-deplink.svg)](https://gemnasium.com/hawky-4s-/npm-deplink)
 
 A small library which aims to help you managing your project dependencies during development.
