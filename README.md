@@ -18,7 +18,7 @@ A small library which aims to help you managing your project dependencies during
 
 ## Tests
 
-  npm test
+  grunt test
 
 ## Contributing
 
