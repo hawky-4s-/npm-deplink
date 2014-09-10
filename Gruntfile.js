@@ -27,7 +27,16 @@ module.exports = function(grunt) {
             './test/expect.js'
           ]
         },
-        src: ['test/**/*.js']
+        src: ['test/unit/**/*.js']
+      },
+      integrationTest: {
+        options: {
+          reporter: 'spec',
+          require: [
+            './test/expect.js'
+          ]
+        },
+        src: ['test/integration/**/*.js']
       }
     },
 
@@ -58,7 +67,9 @@ module.exports = function(grunt) {
 
   // tasks
 
-  grunt.registerTask('test', [ 'mochaTest' ]);
+  grunt.registerTask('integration-test', [ 'mochaTest:integrationTest' ]);
+
+  grunt.registerTask('test', [ 'mochaTest:test' ]);
 
   grunt.registerTask('auto-test', [ 'test', 'watch:test' ]);
 
