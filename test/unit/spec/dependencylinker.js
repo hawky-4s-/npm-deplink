@@ -1,7 +1,8 @@
 'use strict';
 
 var _ = require('lodash'),
-    path = require('path');
+    path = require('path'),
+    shell = require('shelljs');
 
 var DependencyLinker = require('../../../');
 var debugOptions = { dryRun: true };
@@ -97,6 +98,39 @@ describe('DependencyLinker', function() {
 
       dependencyLinker.link();
     });
+
+//    it('test ln cmd', function() {
+//      shell.ln('-s', process.cwd() + '../bpmn-moddle', '/Users/hawky4s/development/bpmn.io/bpmn-io-app-cloud-builder/node_modules/bpmn-moddle');
+//    });
+
+  });
+
+
+  describe('#lodash', function() {
+
+    it('should only overwrite already present duplicate properties', function() {
+      var deps = {
+        "a": 1,
+        "b": 2
+      }
+      var devDeps = {
+        "a": 3,
+        "c": 4,
+        "d": 5
+      }
+
+      var dependencies = {};
+      _.extend(dependencies, deps || {});
+      _.extend(dependencies, devDeps || {});
+
+      expect(dependencies).to.have.keys(['a','b','c','d']);
+      expect(dependencies).to.deep.equal({
+        a: 3,
+        b: 2,
+        c: 4,
+        d: 5
+      });
+    })
 
   });
 
