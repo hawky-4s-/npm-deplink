@@ -1,1 +1,1 @@
-module.exports = require('./lib/DepLink');
+module.exports = require('./lib/DepLinker');
