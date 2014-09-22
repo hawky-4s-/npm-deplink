@@ -14,8 +14,10 @@ A small library which aims to help you managing your project dependencies during
 
   // link with npm link
   var deplink = require('deplink');
-  var dependencyLinker = new DependencyLinker('myRootDirectory');
-  dependencyLinker.link();
+  var dependencyLinker = new DependencyLinker('myRootDirectory', options);
+  dependencyLinker.link(null, function(err,result) {
+    if (err) throw new Error(e);
+  });
 
 
   // link with symlinks
@@ -23,7 +25,9 @@ A small library which aims to help you managing your project dependencies during
 
   var options = { useSymlinks: true };
   var dependencyLinker = new DependencyLinker('myRootDirectory', options);
-  dependencyLinker.link();
+  dependencyLinker.link(null, function(err,result) {
+    if (err) throw new Error(e);
+  });
 
 
 ## Tests
