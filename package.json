@@ -1,8 +1,8 @@
 {
   "name": "deplink",
-  "version": "0.1.0",
+  "version": "0.0.0",
   "description": "Discovers all projects inside a directory, links them through 'npm link' and installs their modules 'npm install'.",
-  "main": "lib/DepLink.js",
+  "main": "lib/DepLinker.js",
   "scripts": {
     "test": "grunt test"
   },
