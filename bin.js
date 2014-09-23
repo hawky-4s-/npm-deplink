@@ -43,10 +43,12 @@ console.log('options: ', options);
 
 var callback = function(err, result) {
   if (err) {
-    throw new Error(err);
+    console.log('An error occured: ', err);
+    process.exit(1);
   }
 
   console.log('Finished linking: ', result);
+  process.exit(0);
 };
 
 var DependencyLinker = require('./lib/DepLinker');
