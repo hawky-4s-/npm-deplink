@@ -48,7 +48,9 @@ describe('DependencyLinker', function() {
 
       var dependencyLinker = new DependencyLinker(testPath, { logLevel: 'debug', dryRun: false, verbose: true });
 
-      dependencyLinker.link();
+      dependencyLinker.link(null, function(err, result) {
+        expect(err).to.be.undefined;
+      });
     });
 
   });

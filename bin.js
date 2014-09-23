@@ -8,15 +8,17 @@ var argv = require('yargs')
     .describe('v', 'Enable verbose output of operations.')
     .describe('debug', 'Enable debug mode.')
     .usage('Usage: $0 <workingDir> . Use --help for additional infos.')
-    .example('$0 . -sd - Execute a dryrun using symlinks to connect the dependencies located in current directoy.')
+    .example('$0 . -sd - Execute a dryrun using symlinks to connect the dependencies located in current directory.')
     .argv,
 
     _ = require('lodash');
 
-var options = {}
+var options = {};
 
 if (argv._) {
   _.extend(options, { workingDir: argv._[0] });
+} else {
+  _.extend(options, { workingDir: process.cwd() });
 }
 if (argv.s) {
   _.extend(options, { symlinks: true });
@@ -39,6 +41,12 @@ if (argv.debug) {
 
 console.log('Options: ', options);
 
-var DependencyLinker = require('./lib/DepLink');
+var DependencyLinker = require('./lib/DepLinker');
 var dependencyLinker = new DependencyLinker(options.workingDir , options);
-dependencyLinker.link();
+dependencyLinker.link(null, function(err, result) {
+  if (err) {
+    throw new Error(err);
+  }
+
+  console.log('Linking finished: ', result);
+});

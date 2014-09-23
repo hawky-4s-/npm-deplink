@@ -7,7 +7,7 @@ var _ = require('lodash'),
 var DependencyResolver = require('../../../lib/DepResolver');
 var debugOptions = { dryRun: true };
 
-var TEST_RESOURCS_DIR = '../../test/resources';
+var TEST_RESOURCS_DIR = 'test/resources';
 var RELATIVE_TEST_RESOURCES_DIR = path.join(TEST_RESOURCS_DIR);
 
 describe('DependencyResolver', function() {
