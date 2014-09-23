@@ -39,11 +39,9 @@ if (argv.debug) {
   console.log('Set logLevel to debug.')
 }
 
-console.log('options: ', options);
-
 var callback = function(err, result) {
   if (err) {
-    console.log('An error occured: ', err);
+    console.log('An error occurred: ', err);
     process.exit(1);
   }
 
