@@ -6,6 +6,8 @@ var argv = require('yargs')
     .describe('d', 'Execute a dryRun without linking the dependencies.')
     .alias('v', 'verbose')
     .describe('v', 'Enable verbose output of operations.')
+    .alias('f', 'force')
+    .describe('f', 'Force execution of commands like linking etc.')
     .describe('debug', 'Enable debug mode.')
     .usage('Usage: $0 <workingDir> . Use --help for additional infos.')
     .example('$0 . -sd - Execute a dryRun using symlinks to connect the dependencies located in current directory.')
@@ -33,6 +35,10 @@ if (argv.d) {
 if (argv.v) {
   _.extend(options, { verbose: true });
   console.log('Enabling verbose output.')
+}
+if (argv.f) {
+  _.extend(options, { overwrite: true });
+  console.log('Enabling force mode. Hail the force!')
 }
 if (argv.debug) {
   _.extend(options, { logLevel: 'debug' });

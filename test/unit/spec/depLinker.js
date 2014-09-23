@@ -52,14 +52,15 @@ describe('DependencyLinker', function() {
         expect(err).to.be.undefined;
 
         console.log(result);
-        // TODO: change commands to use and return relative paths instead of absolute ones
         expect(result).to.have.members([
           'cd test/resources/test1',
           'npm install',
           'cd test/resources/test3-cyclic',
+          'mkdir -p test/resources/test3-cyclic/node_modules',
           'ln -s test/resources/test4-cyclic node_modules/test4',
           'npm install',
           'cd test/resources/test2',
+          'mkdir -p test/resources/test2/node_modules',
           'ln -s test/resources/test1 node_modules/test1',
           'ln -s test/resources/test3-cyclic node_modules/test3',
           'npm install'
