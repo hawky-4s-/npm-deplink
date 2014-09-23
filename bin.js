@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 var argv = require('yargs')
-    .alias('s', 'symlinks')
+    .alias('s', 'use-symlinks')
     .describe('s', 'Use symlinks instead of npm link to connect the dependencies.')
     .alias('d', 'dryRun')
     .describe('d', 'Execute a dryRun without linking the dependencies.')
@@ -8,7 +8,7 @@ var argv = require('yargs')
     .describe('v', 'Enable verbose output of operations.')
     .describe('debug', 'Enable debug mode.')
     .usage('Usage: $0 <workingDir> . Use --help for additional infos.')
-    .example('$0 . -sd - Execute a dryrun using symlinks to connect the dependencies located in current directory.')
+    .example('$0 . -sd - Execute a dryRun using symlinks to connect the dependencies located in current directory.')
     .argv,
 
     _ = require('lodash');
@@ -39,10 +39,14 @@ if (argv.debug) {
   console.log('Set logLevel to debug.')
 }
 
+console.log('options: ', options);
+
 var callback = function(err, result) {
   if (err) {
     throw new Error(err);
   }
+
+  console.log('Finished linking: ', result);
 };
 
 var DependencyLinker = require('./lib/DepLinker');
