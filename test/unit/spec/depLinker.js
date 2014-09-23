@@ -57,11 +57,11 @@ describe('DependencyLinker', function() {
           'cd test/resources/test1',
           'npm install',
           'cd test/resources/test3-cyclic',
-          'ln -s test/resources/test4-cyclic /Users/hawky4s/development/bpmn.io/dependency-linker/test/resources/test3-cyclic/node_modules',
+          'ln -s test/resources/test4-cyclic node_modules',
           'npm install',
           'cd test/resources/test2',
-          'ln -s test/resources/test1 /Users/hawky4s/development/bpmn.io/dependency-linker/test/resources/test2/node_modules',
-          'ln -s test/resources/test3-cyclic /Users/hawky4s/development/bpmn.io/dependency-linker/test/resources/test2/node_modules',
+          'ln -s test/resources/test1 node_modules',
+          'ln -s test/resources/test3-cyclic node_modules',
           'npm install'
         ]);
       });

@@ -39,14 +39,12 @@ if (argv.debug) {
   console.log('Set logLevel to debug.')
 }
 
-console.log('Options: ', options);
-
-var DependencyLinker = require('./lib/DepLinker');
-var dependencyLinker = new DependencyLinker(options.workingDir , options);
-dependencyLinker.link(null, function(err, result) {
+var callback = function(err, result) {
   if (err) {
     throw new Error(err);
   }
+};
 
-  console.log('Linking finished: ', result);
-});
+var DependencyLinker = require('./lib/DepLinker');
+var dependencyLinker = new DependencyLinker(options.workingDir , options);
+dependencyLinker.link(null, callback);
