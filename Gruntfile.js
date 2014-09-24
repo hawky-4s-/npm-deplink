@@ -50,7 +50,7 @@ module.exports = function(grunt) {
 
     watch: {
       test: {
-        files: [ '<%= config.sources %>/**/*.js', '<%= config.tests %>/spec/**/*.js' ],
+        files: [ '<%= config.sources %>/**/*.js', '<%= config.tests %>/test/**/*.js' ],
         tasks: [ 'test' ]
       }
     },
