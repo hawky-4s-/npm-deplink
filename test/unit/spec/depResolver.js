@@ -23,7 +23,8 @@ describe('DependencyResolver', function() {
             RELATIVE_TEST_RESOURCES_DIR + '/test1',
             RELATIVE_TEST_RESOURCES_DIR + '/test2',
             RELATIVE_TEST_RESOURCES_DIR + '/test3-cyclic',
-            RELATIVE_TEST_RESOURCES_DIR + '/test4-cyclic'
+            RELATIVE_TEST_RESOURCES_DIR + '/test4-cyclic',
+            RELATIVE_TEST_RESOURCES_DIR + '/test5-solo'
       ];
 
       expect(dirs).to.have.members(expectedDirs);
@@ -79,7 +80,7 @@ describe('DependencyResolver', function() {
         }
         var dependencies = result;
 
-        expect(_.keys(dependencies)).to.have.length(4);
+        expect(_.keys(dependencies)).to.have.length(5);
         _.forEach(dependencies, function(projectDep) {
           expect(projectDep).to.have.keys(['name', 'path', 'dependencies']);
         });

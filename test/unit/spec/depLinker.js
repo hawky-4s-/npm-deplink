@@ -36,6 +36,8 @@ describe('DependencyLinker', function() {
             'npm link test4',
             'cd test/resources/test2',
             'npm link test1 test3',
+            'npm install',
+            'cd test/resources/test5-solo',
             'npm install'
         ]);
       });
@@ -67,6 +69,8 @@ describe('DependencyLinker', function() {
           'mkdir -p test/resources/test2/node_modules',
           'ln -s test/resources/test1 node_modules/test1',
           'ln -s test/resources/test3-cyclic node_modules/test3',
+          'npm install',
+          'cd test/resources/test5-solo',
           'npm install'
         ]);
       });
